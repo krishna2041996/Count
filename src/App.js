@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
-function App() {
+const App = () => {
+  const [count, setCount] = useState(() => {
+    const intialData = localStorage.getItem("item");
+    return intialData === null ? 0 : intialData;
+  });
+
+  const clickInc = () => {
+    return count > 9 ? count : setCount(count + 1);
+  };
+  const clickDec = () => {
+    return count < 1 ? count : setCount(count - 1);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("item", count);
+  }, [count]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <center>
+      <>
+        <h1>{count}</h1>
+        <button onClick={clickInc}>Increment</button>
+        {"          "}
+        <button onClick={clickDec}>Decrement</button>
+      </>
+    </center>
   );
-}
+};
 
 export default App;
+
